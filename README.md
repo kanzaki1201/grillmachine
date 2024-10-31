@@ -38,3 +38,9 @@ To share, add `--remote=True`.
 # Troubleshooting
 
 If the output says `gpu available: False` [you might need to pip install a different version of Torch for your specific hardware](https://pytorch.org/get-started/locally/#start-locally)
+
+# kzk todo
+- [ ] feature: use whisperX? has same writer etc just replace with whisperX
+- [ ] external translate (use claude or openai etc)
+- [ ] put output file in output folder instead of temp
+- [ ] context/token limit -- directly pass srt file is insane --> needs to just extract the text to pass to translate

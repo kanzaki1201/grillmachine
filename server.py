@@ -4,6 +4,7 @@ import argparse
 import tempfile
 import torch
 import whisper
+import os
 from whisper.utils import get_writer
 
 import ytdlp_functions
@@ -36,14 +37,17 @@ def transcribe(inputFile, language, model, task, addSrtToVideo):
         fp16=gpu
     )
 
-    writer = get_writer("srt", str(tempfile.gettempdir()))
+    filename = os.path.basename(inputFileCleared)
+    # writer = get_writer("srt", os.path.dirname(inputFileCleared))
+    writer = get_writer("srt", "output")
     writer(whisperOutput, inputFileCleared)
     # broken srt filepaths. Use those if tempdir acts weird.
     # srtFile = f"{inputFileCleared}" + ".srt"
     # anotherSrtFile = inputFileCleared.rsplit(".", 2)[0] + ".srt"
     srtFile = inputFileCleared.rsplit(".", 1)[0] + ".srt"
+    srtFile = os.path.join("output", filename.rsplit(".", 1)[0] + ".srt")
     if addSrtToVideo:
-        video_out = inputFileCleared + "_output.mkv"
+        video_out = os.path.join("output", filename.rsplit(".", 1)[0] + "_output.mkv")
 
         input_ffmpeg = ffmpeg.input(inputFileCleared)
         input_ffmpeg_sub = ffmpeg.input(srtFile)
